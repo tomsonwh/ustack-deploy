@@ -1,0 +1,19 @@
+---
+- name: undercloud  config network
+  import_tasks: network.yml
+  tags: network
+- name: undercloud creat user
+  import_tasks: creatuser.yml
+  tags: creatuser
+- name: undercloud change repo
+  import_tasks: change_repo.yml
+  tags: repo
+- name: undercloud install
+  import_tasks: undercloud-install.yml
+  tags: undercloud_install
+- name: overcloud image
+  import_tasks: overcloud-image.yml
+  tags: overcloud_image
+- name: overcloud introspection
+  import_tasks: overcloud-introspect.yml
+  tags: overcloud_introspect

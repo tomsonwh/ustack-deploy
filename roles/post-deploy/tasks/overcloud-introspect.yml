@@ -1,0 +1,15 @@
+---
+- name: 
+  block:
+    - name: check IPMI API
+      copy: 
+        src: check_ipmi.sh
+        dest: /home/stack/check_ipmi.sh
+    - name: bash check_ipmi.sh
+      shell: bash /home/stack/check_ipmi.sh
+    - name:  overcloud node import
+      shell: source /home/stack/stackrc && openstack overcloud node import overcloud-nodes.yaml
+    - name:  overcloud node introspect
+      shell: source /home/stack/stackrc && openstack overcloud node introspect --all-manageable --provide
+  become: true
+  become_user: stack

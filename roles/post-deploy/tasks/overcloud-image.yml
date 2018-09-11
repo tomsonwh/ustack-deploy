@@ -1,0 +1,27 @@
+---
+- name:
+  block:
+    - name: mkdir  deploy_images
+      file:
+        path: /home/stack/deploy_images
+        state: directory
+    - name: curl overcloud-image-ironic
+      get_url:
+        url: "{{ ironic_python_agent }}"
+        dest: /home/stack/deploy_images/
+    - name: curl overcloud-image-full
+      get_url:
+        url: "{{overcloud_full}}"
+        dest: /home/stack/deploy_images/
+    - name: list file name
+      shell: ls /home/stack/deploy_images/
+      register: result
+ 
+    - name:  tar -xf overcloud image
+      shell: tar -xf /home/stack/deploy_images/{{item}}
+      with_items:
+         - "{{result.stdout_lines}}"
+    - name: overcloud image upload
+      shell: source /home/stack/stackrc && openstack overcloud image upload --image-path /home/stack/deploy_images
+  become: true
+  become_user: stack

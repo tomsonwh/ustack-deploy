@@ -1,0 +1,7 @@
+- name: install uos   seed infra
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - seed-deploy
+  vars_files:
+    - "../../group_vars/seed.yaml"

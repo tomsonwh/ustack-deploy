@@ -1,0 +1,7 @@
+- name: install uos infra
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - post-deploy
+  vars_files:
+    - "../../group_vars/all.yaml"

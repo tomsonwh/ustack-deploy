@@ -1,0 +1,42 @@
+---
+eth0_ip: 10.0.80.20
+eth0_netmask: 255.255.255.0
+
+eth1_ip: 10.0.81.20
+eth1_netmask: 255.255.255.0
+eth1_gateway: 10.0.81.1
+
+
+repo_ustack_com: 10.0.218.11
+registry_ustack_com: 10.0.218.20
+registry_dev_ustack_com: 10.0.218.29
+
+ustack_repo_url: http://repo.ustack.com/ustack-newton-production.repo
+production: UOS
+
+#UnderCloud PXE 网卡的 IP 地址
+local_ip: 10.0.80.20/24
+
+# UnderCloud 以及 OverCloud br-ctlplan 网络的网关
+network_gateway: 10.0.80.1
+
+# PXE 网络使用的网卡
+local_interface: eth0
+
+# PXE 网络的 CIDR
+network_cidr: 10.0.80.0/24
+
+# 与 PXE 网络一致
+masquerade_network: 10.0.80.0/24
+
+# OverCloud node 通过 Neutron 分配获取到的地址
+dhcp_start: 10.0.80.60
+dhcp_end: 10.0.80.65
+
+# 对 OverCloud node 进行 introspection 时分配的 IP，注意不要和 dhcp_start, dhcp_end 重叠
+# 这个range 可以使用未分配给 OverCloud 的 PXE 地址段
+inspection_iprange: 10.0.80.100,10.0.80.120
+
+# overcloud 的镜像 url
+ironic_python_agent: http://repo.ustack.com/uos-4.0-production/images/uos-4.3.2/ironic-python-agent.tar
+overcloud_full: http://repo.ustack.com/uos-4.0-production/images/uos-4.3.2/overcloud-full.tar

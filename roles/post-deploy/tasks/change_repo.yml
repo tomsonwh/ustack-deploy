@@ -1,0 +1,56 @@
+---
+- name: change repo
+  block:
+    - name: remove old repo
+      file:
+        path: /etc/yum.repos.d/*.repo
+        state: absent
+    - name: curl ustack repo
+      get_url:
+        url: "{{ ustack_repo_url }}"
+        dest: /etc/yum.repos.d/
+    - name: Install yum-plugin-priorities
+      yum:
+        name: yum-plugin-priorities
+        state: latest
+        update_cache: yes
+    - name: Install vim
+      yum:
+        name: vim
+        state: latest
+        update_cache: yes
+    - name: Install tmux
+      yum:
+        name: tmux
+        state: latest
+        update_cache: yes
+    - name: update   redhat-release
+      yum:
+        name: redhat-release
+        state: latest
+        update_cache: yes
+    - name: remove  other repo
+      file:
+        path: /etc/yum.repos.d/Centos*
+        state: absent
+
+- name: Install python-tripleoclient
+  yum:
+    name: python-tripleoclient
+    state: latest
+    update_cache: yes
+- name: Install uos-heat-templates
+  yum:
+    name: uos-heat-templates
+    state: latest
+    update_cache: yes
+  when: production == 'UOS'
+  ignore_errors: yes
+
+- name: Install ustack-tripleo-heat-templates
+  yum :
+    name: ustack-tripleo-heat-templates
+    state: latest
+    update_cache: yes
+  when: production == 'UDS'
+  ignore_errors: yes

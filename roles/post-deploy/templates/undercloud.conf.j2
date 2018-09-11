@@ -1,0 +1,32 @@
+[DEFAULT]
+# UnderCloud PXE 网卡的 IP 地址
+local_ip = {{local_ip}}
+
+# UnderCloud 以及 OverCloud br-ctlplan 网络的网关
+network_gateway = {{network_gateway}}
+
+# PXE 网络使用的网卡
+local_interface = {{local_interface}}
+
+# PXE 网络的 CIDR
+network_cidr = {{network_cidr}}
+
+# 与 PXE 网络一致
+masquerade_network = {{masquerade_network}}
+
+# OverCloud node 通过 Neutron 分配获取到的地址
+dhcp_start = {{dhcp_start}}
+dhcp_end = {{dhcp_end}}
+
+# 为了能够使用 UOS Director UI 我们需要把网关起在 PXE 网络上,
+# 使用包含网关的网络配置模板来安装 Undercloud
+net_config_override = net-config.json.template
+
+# inspection 网卡，默认使用 br-ctlplane 即可
+inspection_interface = br-ctlplane
+
+# 对 OverCloud node 进行 introspection 时分配的 IP，注意不要和 dhcp_start, dhcp_end 重叠
+# 这个range 可以使用未分配给 OverCloud 的 PXE 地址段
+inspection_iprange = {{inspection_iprange}}
+
+hieradata_override = hiera_override.yaml

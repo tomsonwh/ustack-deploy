@@ -1,0 +1,32 @@
+---
+- name: creat stack user
+  block:
+    - name: creat stack group
+      group:
+        name: stack
+        state: present
+    - name: Allow stack group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%stack'
+        line: '%stack ALL=(ALL) NOPASSWD: ALL'
+    - name: creat stack user
+      user:
+        name: stack
+        shell: /bin/bash
+        groups: stack
+        createhome: yes
+        home: /home/stack
+        state: present
+
+- name: hostname set undercloud
+  shell: hostnamectl set-hostname undercloud.example.com
+
+- name: hostname transient undercloud
+  shell: hostnamectl set-hostname --transient undercloud.example.com
+
+- name: change hosts config
+  template: 
+    src: hosts.j2
+    dest: /etc/hosts      

@@ -1,0 +1,25 @@
+---
+- name:   undercloud install
+  block:
+    - name: move  os_net_config config
+      copy:
+        src: net-config.json.template
+        dest: /home/stack/net-config.json.template
+    - name: disable docker server
+      template:
+        src: hiera_override.yaml.j2
+        dest: /home/stack/hiera_override.yaml
+    - name: add undercloud config
+      template:
+        src: undercloud.conf.j2
+        dest: /home/stack/undercloud.conf
+    - name:  check undercloud install
+      shell: ls /home/stack/stackrc
+      ignore_errors: True
+      register: result
+
+    - name: openstack undercloud install
+      shell: openstack undercloud install
+      when: result|failed
+  become: true
+  become_user: stack
