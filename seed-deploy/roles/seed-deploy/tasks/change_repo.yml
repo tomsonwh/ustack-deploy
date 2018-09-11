@@ -1,0 +1,11 @@
+---
+- name: initialization seed repo
+  block:
+    - name: clean other repo
+      file:
+        path: /etc/yum.repos.d/*.repo
+        state: absent
+    - name:  install  ustack release
+      yum:
+        name: /opt/repos/production/ustack/newton/x86_64/ustack-infra/ustack-release-4.0.1-1.el7.noarch.rpm
+        state: present 
