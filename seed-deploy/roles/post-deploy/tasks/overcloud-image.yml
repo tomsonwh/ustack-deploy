@@ -18,7 +18,7 @@
       register: result
  
     - name:  tar -xf overcloud image
-      shell: tar -xf /home/stack/deploy_images/{{item}}
+      shell: tar -xf /home/stack/deploy_images/{{item}} -C /home/stack/deploy_images/
       with_items:
          - "{{result.stdout_lines}}"
     - name: overcloud image upload
